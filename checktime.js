@@ -7,20 +7,25 @@ module.exports = function(time) {
     var testInput2 = (match.word).test(time);
     // initialize object to return
     var timeObj = { unix: null, natural: null };
+     console.log(testInput2);
 
     if(testInput) {
         var timeArr = time.split(match.nonWord).filter(i => i !== "");
         var midDate = {};
-// wpisać dzień na srodku, rok dwucyrfowo
         timeArr.forEach((e, i) => {
-         if(match.day(e,i))
+         var assigned = false;
+         if(match.day(e,i) && !midDate.hasOwnProperty("day")  && !assigned) {
                 midDate.day = e;
-         if(match.month(e,i))
+                assigned = true;
+            }
+         if(match.month(e,i) && !midDate.hasOwnProperty("month") && !assigned) {
                  midDate.month = e;
-         if(match.year(e,i))
+                 assigned = true;
+             }
+         if(match.year(e,i)  && !midDate.hasOwnProperty("year") && !assigned) {
                  midDate.year = e;
+             }
         });
-
         timeObj.natural = moment(
             `${midDate.day}-${midDate.month}-${midDate.year}`,
              match.momentFormats)

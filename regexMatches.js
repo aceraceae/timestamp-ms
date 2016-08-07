@@ -1,9 +1,9 @@
 module.exports = {
     nonWord: /[\W\_]/i,
-    word: /\w/i,
-    day: (e,i) => (/\d/).test(e) && e.length < 3 && i !== 1,
-    month: (e,i) => (/\D/).test(e) || Number(e) < 13 && i == 1,
-    year: (e,i) => (/\d/).test(e) && e.length > 2,
-    momentFormats: ['DD-MM-YYYY', 'DD-MMM-YYYY', 'DD-MMMM-YYYY'],
+    word: /[a-z]/i,
+    day: (e,i) => (/\d/).test(e) && Number(e) < 32,
+    month: (e,i) => (/\D/).test(e) || Number(e) < 13 || (/\D/).test(e) && i == 0,
+    year: (e,i) => (/\d/).test(e) && e.length < 5 && e.length > 1,
+    momentFormats: ['DD-MM-YYYY', 'DD-MMM-YYYY', 'DD-MMMM-YYYY', 'DD-MM-YY'],
     format: "DD MMMM YYYY"
 }
