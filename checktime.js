@@ -11,6 +11,9 @@ module.exports = function(time) {
 
     if(testInput) {
         var timeArr = time.split(match.nonWord).filter(i => i !== "");
+        if(timeArr.length !== 3) {
+            return timeObj;
+        }
         var midDate = {};
         timeArr.forEach((e, i) => {
          var assigned = false;
@@ -37,6 +40,11 @@ module.exports = function(time) {
     } else if(!testInput2) {
        timeObj.unix = time;
        timeObj.natural = moment(new Date(time*1000)).format(match.format);
+   }
+
+   if(!moment(timeObj.natural).isValid()) {
+       timeObj.natural = null;
+       timeObj.unix = null;
    }
 
    return timeObj;
