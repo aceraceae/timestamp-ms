@@ -1,5 +1,5 @@
 var moment = require('moment');
-var match = require('./regexMatches');
+var match = require('./regex-matches');
 
 module.exports = function(time) {
     // regex tests
@@ -7,7 +7,6 @@ module.exports = function(time) {
     var testInput2 = (match.word).test(time);
     // initialize object to return
     var timeObj = { unix: null, natural: null };
-     console.log(testInput2);
 
     if(testInput) {
         var timeArr = time.split(match.nonWord).filter(i => i !== "");
@@ -42,7 +41,7 @@ module.exports = function(time) {
        timeObj.natural = moment(new Date(time*1000)).format(match.format);
    }
 
-   if(!moment(timeObj.natural).isValid()) {
+   if(!moment(timeObj.natural, match.format).isValid()) {
        timeObj.natural = null;
        timeObj.unix = null;
    }
