@@ -18,7 +18,7 @@ describe("Time checking", function() {
      ];
 
      var filtered = unixDates.filter(time => checkTime(time).unix === time);
-     expect(filtered.length).toEqual(10);
+     expect(filtered.length).toEqual(unixDates.length);
   });
 
   it("should be able to process natural format dates", function() {
@@ -37,7 +37,40 @@ describe("Time checking", function() {
      ];
 
      var filtered = naturalDates.filter(time => checkTime(time).natural === '24 May 2010');
-     expect(filtered.length).toEqual(10);
+     expect(filtered.length).toEqual(naturalDates.length);
+  });
+
+  it("should be able to reject invalid dates", function() {
+
+     var invalidDates = [
+         'rguebioebmwrgobkiunr',
+         '__+_   hght)))_',
+         '',
+         '1234acb',
+         'aa.dd.gr',
+         'BGR55',
+         '24 spam 2014',
+         'blegh',
+         ',_  [][]',
+         '23-10-2003-12',
+         '00-00-00',
+         'may feb dec',
+         '56-14-89'
+     ];
+
+    //  var arr = [];
+    //  invalidDates.forEach((time,i) => {
+    //  if(checkTime(time).natural === null && checkTime(time).unix === null) {
+     //
+    //      arr.push(i);
+    //  } else {
+    //      console.log(checkTime(time));
+    //  }
+    //  });
+    //   console.log(arr);
+
+     var filtered = invalidDates.filter(time => checkTime(time).natural === null && checkTime(time).unix === null);
+     expect(filtered.length).toEqual(invalidDates.length);
   });
 
 });

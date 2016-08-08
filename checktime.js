@@ -1,16 +1,18 @@
+'use strict';
 var moment = require('moment');
 var match = require('./regex-matches');
 
 module.exports = function(time) {
     // regex tests
     var testInput = (match.nonWord).test(time);
-    var testInput2 = (match.word).test(time);
+    var testInput2 = (match.digits).test(time)
+    var testInput3 = (match.word).test(time);
     // initialize object to return
     var timeObj = { unix: null, natural: null };
 
-    if(testInput) {
+    if(testInput && testInput2) {
         var timeArr = time.split(match.nonWord).filter(i => i !== "");
-        if(timeArr.length !== 3) {
+        if(timeArr.length !== 3 ) {
             return timeObj;
         }
         var midDate = {};
@@ -36,7 +38,7 @@ module.exports = function(time) {
         timeObj.unix = new Date(timeObj.natural).getTime();
         timeObj.unix = Number(timeObj.unix)/1000;
 
-    } else if(!testInput2) {
+    } else if(!testInput3 && Number(time)) {
        timeObj.unix = time;
        timeObj.natural = moment(new Date(time*1000)).format(match.format);
    }
